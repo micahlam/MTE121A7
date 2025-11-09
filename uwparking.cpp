@@ -1,6 +1,7 @@
 #include <iostream>
 #include <fstream>
 #include <string>
+#include <iomanip>
 using namespace std;
 
 
@@ -57,18 +58,46 @@ void parkingCurrentData(ifstream &file) {
         isFull[index] = true;
     }
 }
-// c) do stuff here
+// c) 
+void parkingRemoveAddData (ifstream &fileR, ifstream &fileA) 
+//fileR is remove file, fileA is add file
+{
+	int status = 0;
+	string name = "";
+	
+	int i_remove =0;
+	
+	while (fileR >> status >> name && i_remove <9) { // note to self
+		staffOrStudentGone [i_remove] = status; // maybe change to for loop
+		namesGone[i_remove] = name;	
+		i_remove++;
+	}
+	
+	int i_add =0;
+	
+	while (fileA >> status >> name && i_add <20) {
+		staffOrStudentAdd[i_add] = status;
+		namesAdd [i_add] = name; 
+		i_add++;
+	}
+}
 
-
-
-
-// d) do stuff here
-
-
-
+// d)
+void RemovePeople (string nameOfPerson) //send remove names in function in a loop
+{
+	for (int i=0; i < maxSpots; i++){
+		
+		if (nameOfPerson == names [i] ) {	
+			staffOrStudent [i] = 0;
+			names [i] = "";
+			isFull [i] = false;
+		} 
+	}
+}
 
 // e)
-int EmptySpace(bool faculty) {
+int EmptySpace(bool faculty)
+{
     int start = (faculty) ? 0 : 25;
     int end = (faculty) ? 25 : 50;
 
@@ -80,10 +109,21 @@ int EmptySpace(bool faculty) {
     return -1;
 }
 
-// f) do stuff here
-
-
-
+// f) 
+void PeopleToSpace (string nameOfPerson, bool faculty)
+{
+	int spot = EmptySpace(faculty); //returns space or -1 if none empty
+	
+	if (spot != -1) {
+		staffOrStudent[spot] = faculty;
+		names[spot] = nameOfPerson;
+		isFull[spot] = true;
+	}
+	else
+	{
+		bool full =true;
+	}
+}
 
 
 // g)
@@ -107,9 +147,15 @@ void MoveStaff() {
 }
 
 // h)
-
-
-
-
-
-
+void OutputToFile (ofstream &outFile, string names[], bool staffOrStudent [], int maxSpots)
+{
+	outFile << setw(8) << "Spot " << setw(12) << "Who? " 
+	<< setw(20) << "Name: " << endl;
+	
+	for (int i =0; i < maxSpots; i++){
+		int spot = i+1;
+		
+		outFile << setw(8) << spot;
+		outFile << setw(12) << staffOrStudent[i] << setw(20) << names[i]<< endl;
+	}
+}
