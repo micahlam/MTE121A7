@@ -106,38 +106,35 @@ int EmptySpace(bool faculty)
             return i;
         }
     }
-    return -1;
+    return -1; // no empty space
 }
 
+
 // f) 
-void PeopleToSpace (string nameOfPerson, bool faculty)
+void PeopleToSpace(string nameOfPerson, bool faculty)
 {
-	int spot = EmptySpace(faculty); //returns space or -1 if none empty
-	
-	if (spot != -1) {
-		staffOrStudent[spot] = faculty;
-		names[spot] = nameOfPerson;
-		isFull[spot] = true;
-	}
-	else
-	{
-		bool full =true;
-	}
+    int spot = EmptySpace(faculty); // returns space or -1 if none empty
+    
+    if (spot != -1) {
+        staffOrStudent[spot] = faculty;
+        names[spot] = nameOfPerson;
+        isFull[spot] = true;
+    }
 }
 
 
 // g)
 void MoveStaff() {
     for (int i = 25; i < 50; i++) {
-        if (isFull[i] && staffOrStudent[i] == 1) {
+        if (isFull[i] && staffOrStudent[i] == 1) { // staff parked in student zone
             int newIndex = EmptySpace(true);
             if (newIndex != -1) {
-                // Move to new location
+                // move them to new staff spot
                 names[newIndex] = names[i];
                 staffOrStudent[newIndex] = staffOrStudent[i];
                 isFull[newIndex] = true;
 
-                // Free old space
+                // free old space
                 names[i] = "";
                 staffOrStudent[i] = 0;
                 isFull[i] = false;
@@ -146,16 +143,69 @@ void MoveStaff() {
     }
 }
 
+
 // h)
-void OutputToFile (ofstream &outFile, string names[], bool staffOrStudent [], int maxSpots)
+void OutputToFile(ofstream &outFile, string names[], bool staffOrStudent[], int maxSpots)
 {
-	outFile << setw(8) << "Spot " << setw(12) << "Who? " 
-	<< setw(20) << "Name: " << endl;
-	
-	for (int i =0; i < maxSpots; i++){
-		int spot = i+1;
-		
-		outFile << setw(8) << spot;
-		outFile << setw(12) << staffOrStudent[i] << setw(20) << names[i]<< endl;
-	}
+    outFile << left << setw(8) << "Spot"
+            << setw(12) << "Status"
+            << setw(20) << "Name" << endl;
+    outFile << string(40, '-') << endl;
+
+    for (int i = 0; i < maxSpots; i++) {
+        outFile << left << setw(8) << (i + 1)
+                << setw(12) << (staffOrStudent[i] ? "Staff" : "Student")
+                << setw(20) << names[i] << endl;
+    }
+}
+
+
+int main() {
+    // a) Initialize arrays
+    initializeArrays();
+
+    // b + c) Open all input/output files
+    ifstream currentFile("parkingCurrent.txt");
+    ifstream removeFile("parkingRemove.txt");
+    ifstream addFile("parkingAdd.txt");
+    ofstream outFile("parkingUpdated.txt");
+
+    if (!currentFile || !removeFile || !addFile || !outFile) {
+        cerr << "Error: Could not open one or more files." << endl;
+        return 1;
+    }
+
+    // Read in data from files
+    parkingCurrentData(currentFile);
+    parkingRemoveAddData(removeFile, addFile);
+
+    // d) Remove people listed in remove file
+    for (int i = 0; i < maxChanges; i++) {
+        if (namesGone[i] != "") {
+            RemovePeople(namesGone[i]);
+        }
+    }
+
+    // f) Add new people listed in add file
+    for (int i = 0; i < maxChanges; i++) {
+        if (namesAdd[i] != "") {
+            PeopleToSpace(namesAdd[i], staffOrStudentAdd[i]);
+        }
+    }
+
+    // g) Move staff who are in the wrong area
+    MoveStaff();
+
+    // h) Output final updated parking data to file
+    OutputToFile(outFile, names, staffOrStudent, maxSpots);
+
+    // Close files
+    currentFile.close();
+    removeFile.close();
+    addFile.close();
+    outFile.close();
+
+    cout << "Parking update complete. Results saved to parkingUpdated.txt" << endl;
+
+    return 0;
 }
