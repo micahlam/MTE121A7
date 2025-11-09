@@ -1,3 +1,121 @@
+Original Lot: 
+ 
+Spot    Status      Name                
+----------------------------------------
+1       Staff       Stubley_Gord        
+2       Staff       Yiu_Fiona           
+3       Staff       Pritzker_Mark       
+4       Student                         
+5       Student     Rochlitz_Alexandra  
+6       Student                         
+7       Student                         
+8       Student                         
+9       Staff       Consell_Ryan        
+10      Student     Paik_Chad           
+11      Staff       Davison_Dan         
+12      Staff       Bedi_Sanjeev        
+13      Student                         
+14      Student                         
+15      Student                         
+16      Student                         
+17      Staff       Stachowsky_Michael  
+18      Staff       Lau_David           
+19      Student     Malloch_Jeremy      
+20      Student                         
+21      Staff       McKillop_Bob        
+22      Student                         
+23      Student                         
+24      Student                         
+25      Staff       Davidson_George     
+26      Student     Lung_Ian            
+27      Student                         
+28      Student     Huot_Isabella       
+29      Student     Lau_Amanda          
+30      Staff       Xie_Wei-Chau        
+31      Student     Mills_Joel          
+32      Student                         
+33      Student                         
+34      Student                         
+35      Student     Jasmine_Princess    
+36      Student                         
+37      Student                         
+38      Student     Barakat_Abdullah    
+39      Student                         
+40      Student     Hamza_Muhammad      
+41      Student     Zheng_Tim           
+42      Staff       Cronin_Duane        
+43      Student                         
+44      Student                         
+45      Student     Chen_YZ             
+46      Staff       Hulls_Carol         
+47      Student     Yousufzay_Namoos    
+48      Student                         
+49      Student     Lau_Darren          
+50      Staff       Fluid_Newtonian     
+
+Lot with people removed: 
+
+Spot    Status      Name                
+----------------------------------------
+1       Student                         
+2       Student                         
+3       Staff       Pritzker_Mark       
+4       Student                         
+5       Student     Rochlitz_Alexandra  
+6       Student                         
+7       Student                         
+8       Student                         
+9       Student                         
+10      Student                         
+11      Staff       Davison_Dan         
+12      Staff       Bedi_Sanjeev        
+13      Student                         
+14      Student                         
+15      Student                         
+16      Student                         
+17      Student                         
+18      Student                         
+19      Student     Malloch_Jeremy      
+20      Student                         
+21      Staff       McKillop_Bob        
+22      Student                         
+23      Student                         
+24      Student                         
+25      Staff       Davidson_George     
+26      Student     Lung_Ian            
+27      Student                         
+28      Student     Huot_Isabella       
+29      Student     Lau_Amanda          
+30      Staff       Xie_Wei-Chau        
+31      Student     Mills_Joel          
+32      Student                         
+33      Student                         
+34      Student                         
+35      Student     Jasmine_Princess    
+36      Student                         
+37      Student                         
+38      Student     Barakat_Abdullah    
+39      Student                         
+40      Student     Hamza_Muhammad      
+41      Student     Zheng_Tim           
+42      Student                         
+43      Student                         
+44      Student                         
+45      Student                         
+46      Staff       Hulls_Carol         
+47      Student     Yousufzay_Namoos    
+48      Student                         
+49      Student     Lau_Darren          
+50      Staff       Fluid_Newtonian     
+
+Unable to add: Bhamare_Yash. No space.
+Unable to add: Kandathil_Ashar. No space.
+Unable to add: Keillor_Peter. No space.
+Unable to add: Eltantawy_Mostafa. No space.
+Unable to add: Elliott_Jennifer. No space.
+
+Final updated lot: 
+
 Spot    Status      Name                
 ----------------------------------------
 1       Staff       Manezes_Alfred      
