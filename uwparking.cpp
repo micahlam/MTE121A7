@@ -165,10 +165,10 @@ int main() {
     initializeArrays();
 
     // b + c) Open all input/output files
-    ifstream currentFile("parkingCurrent.txt");
-    ifstream removeFile("parkingRemove.txt");
-    ifstream addFile("parkingAdd.txt");
-    ofstream outFile("parkingUpdated.txt");
+    ifstream currentFile("parking_current.txt");
+    ifstream removeFile("parking_remove.txt");
+    ifstream addFile("parking_add.txt");
+    ofstream outFile("parking_updated.txt");
 
     if (!currentFile || !removeFile || !addFile || !outFile) {
         cerr << "Error: Could not open one or more files." << endl;
