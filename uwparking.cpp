@@ -67,8 +67,8 @@ void parkingRemoveAddData (ifstream &fileR, ifstream &fileA)
 	
 	int i_remove =0;
 	
-	while (fileR >> status >> name && i_remove <9) { // note to self
-		staffOrStudentGone [i_remove] = status; // maybe change to for loop
+	while (fileR >> status >> name && i_remove <9) { 
+		staffOrStudentGone [i_remove] = status; 
 		namesGone[i_remove] = name;	
 		i_remove++;
 	}
