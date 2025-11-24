@@ -4,35 +4,35 @@
 #include <iomanip>
 using namespace std;
 
-const int MAXSPOTS = 50;
-const int MAXCHANGES = 25;
+const int maxSpots = 50;
+const int maxChanges = 25;
 
 // for first bool: 1 = staff, 0 = student
 // for second: 1 = full, 0 = empty
 // arrays for current parking
-bool staffOrStudent[MAXSPOTS];
-string names[MAXSPOTS];
-int parkingSpot[MAXSPOTS];
-bool isFull[MAXSPOTS];
+bool staffOrStudent[maxSpots];
+string names[maxSpots];
+int parkingSpot[maxSpots];
+bool isFull[maxSpots];
 
 // arrays for remove
-bool staffOrStudentGone[MAXCHANGES];
-string namesGone[MAXCHANGES];
+bool staffOrStudentGone[maxChanges];
+string namesGone[maxChanges];
 
 // arrays for add
-bool staffOrStudentAdd[MAXCHANGES];
-string namesAdd[MAXCHANGES];
+bool staffOrStudentAdd[maxChanges];
+string namesAdd[maxChanges];
 
 // a)
 void initializeArrays() {
-    for (int i = 0; i < MAXSPOTS; i++) {
+    for (int i = 0; i < maxSpots; i++) {
         staffOrStudent[i] = false;
         names[i] = "";
         parkingSpot[i] = i + 1;
         isFull[i] = false;
     }
 
-    for (int i = 0; i < MAXCHANGES; i++) {
+    for (int i = 0; i < maxChanges; i++) {
         staffOrStudentGone[i] = false;
         namesGone[i] = "";
         staffOrStudentAdd[i] = false;
@@ -81,7 +81,7 @@ void parkingRemoveAddData (ifstream &fileR, ifstream &fileA)
 // d)
 void RemovePeople (string nameOfPerson) 
 {
-	for (int i=0; i < MAXSPOTS; i++){
+	for (int i=0; i < maxSpots; i++){
 		
 		if (nameOfPerson == names [i] ) {	
 			staffOrStudent [i] = 0;
@@ -179,24 +179,24 @@ int main() {
 	
 	
 	outFile << "Original Lot: " << endl <<" " << endl;
- 	OutputToFile(outFile, names, staffOrStudent, MAXSPOTS); 
+ 	OutputToFile(outFile, names, staffOrStudent, maxSpots); 
  	outFile << "" << endl;
 	//Outputs original parking lot before anyone has been removed
 	
     // d) Remove people listed in remove file
-    for (int i = 0; i < MAXCHANGES; i++) {
+    for (int i = 0; i < maxChanges; i++) {
         if (namesGone[i] != "") {
             RemovePeople(namesGone[i]);
         }
     }
 	
 	outFile << "Lot with people removed: " << endl << "" << endl;
-	OutputToFile(outFile, names, staffOrStudent, MAXSPOTS); 
+	OutputToFile(outFile, names, staffOrStudent, maxSpots); 
 	outFile << "" << endl;
 	//Outputs parking lot after people have been removed
 	
     // f) Add new people listed in add file
-    for (int i = 0; i < MAXCHANGES; i++) {
+    for (int i = 0; i < maxChanges; i++) {
         if (namesAdd[i] != "") {
             bool addSuccess = PeopleToSpace(namesAdd[i], staffOrStudentAdd[i]);
 	        
@@ -211,7 +211,7 @@ int main() {
 
     // h) Output final updated parking data to file
     outFile << "" << endl << "Final updated lot: " << endl << "" << endl;
-    OutputToFile(outFile, names, staffOrStudent, MAXSPOTS);
+    OutputToFile(outFile, names, staffOrStudent, maxSpots);
 
     // Close files
     currentFile.close();
