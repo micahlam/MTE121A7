@@ -4,39 +4,35 @@
 #include <iomanip>
 using namespace std;
 
-
-// NOTE: i only did the functions for now, ill write main once u finish ur functions
-// add me on insta micahlam0 to tell me when ur done
-
-const int maxSpots = 50;
-const int maxChanges = 25;
+const int MAXSPOTS = 50;
+const int MAXCHANGES = 25;
 
 // for first bool: 1 = staff, 0 = student
 // for second: 1 = full, 0 = empty
 // arrays for current parking
-bool staffOrStudent[maxSpots];
-string names[maxSpots];
-int parkingSpot[maxSpots];
-bool isFull[maxSpots];
+bool staffOrStudent[MAXSPOTS];
+string names[MAXSPOTS];
+int parkingSpot[MAXSPOTS];
+bool isFull[MAXSPOTS];
 
 // arrays for remove
-bool staffOrStudentGone[maxChanges];
-string namesGone[maxChanges];
+bool staffOrStudentGone[MAXCHANGES];
+string namesGone[MAXCHANGES];
 
 // arrays for add
-bool staffOrStudentAdd[maxChanges];
-string namesAdd[maxChanges];
+bool staffOrStudentAdd[MAXCHANGES];
+string namesAdd[MAXCHANGES];
 
 // a)
 void initializeArrays() {
-    for (int i = 0; i < maxSpots; i++) {
+    for (int i = 0; i < MAXSPOTS; i++) {
         staffOrStudent[i] = false;
         names[i] = "";
         parkingSpot[i] = i + 1;
         isFull[i] = false;
     }
 
-    for (int i = 0; i < maxChanges; i++) {
+    for (int i = 0; i < MAXCHANGES; i++) {
         staffOrStudentGone[i] = false;
         namesGone[i] = "";
         staffOrStudentAdd[i] = false;
@@ -83,9 +79,9 @@ void parkingRemoveAddData (ifstream &fileR, ifstream &fileA)
 }
 
 // d)
-void RemovePeople (string nameOfPerson) //send remove names in function in a loop
+void RemovePeople (string nameOfPerson) 
 {
-	for (int i=0; i < maxSpots; i++){
+	for (int i=0; i < MAXSPOTS; i++){
 		
 		if (nameOfPerson == names [i] ) {	
 			staffOrStudent [i] = 0;
@@ -111,7 +107,7 @@ int EmptySpace(bool faculty)
 
 
 // f) 
-void PeopleToSpace(string nameOfPerson, bool faculty)
+bool PeopleToSpace(string nameOfPerson, bool faculty)
 {
     int spot = EmptySpace(faculty); // returns space or -1 if none empty
     
@@ -119,7 +115,9 @@ void PeopleToSpace(string nameOfPerson, bool faculty)
         staffOrStudent[spot] = faculty;
         names[spot] = nameOfPerson;
         isFull[spot] = true;
+        return true; //person added successfully
     }
+    return false; //not able to add person
 }
 
 
@@ -145,14 +143,14 @@ void MoveStaff() {
 
 
 // h)
-void OutputToFile(ofstream &outFile, string names[], bool staffOrStudent[], int maxSpots)
+void OutputToFile(ofstream &outFile, string names[], bool staffOrStudent[], int MAXSPOTS)
 {
     outFile << left << setw(8) << "Spot"
             << setw(12) << "Status"
             << setw(20) << "Name" << endl;
     outFile << string(40, '-') << endl;
 
-    for (int i = 0; i < maxSpots; i++) {
+    for (int i = 0; i < MAXSPOTS; i++) {
         outFile << left << setw(8) << (i + 1)
                 << setw(12) << (staffOrStudent[i] ? "Staff" : "Student")
                 << setw(20) << names[i] << endl;
@@ -178,26 +176,42 @@ int main() {
     // Read in data from files
     parkingCurrentData(currentFile);
     parkingRemoveAddData(removeFile, addFile);
-
+	
+	
+	outFile << "Original Lot: " << endl <<" " << endl;
+ 	OutputToFile(outFile, names, staffOrStudent, MAXSPOTS); 
+ 	outFile << "" << endl;
+	//Outputs original parking lot before anyone has been removed
+	
     // d) Remove people listed in remove file
-    for (int i = 0; i < maxChanges; i++) {
+    for (int i = 0; i < MAXCHANGES; i++) {
         if (namesGone[i] != "") {
             RemovePeople(namesGone[i]);
         }
     }
-
+	
+	outFile << "Lot with people removed: " << endl << "" << endl;
+	OutputToFile(outFile, names, staffOrStudent, MAXSPOTS); 
+	outFile << "" << endl;
+	//Outputs parking lot after people have been removed
+	
     // f) Add new people listed in add file
-    for (int i = 0; i < maxChanges; i++) {
+    for (int i = 0; i < MAXCHANGES; i++) {
         if (namesAdd[i] != "") {
-            PeopleToSpace(namesAdd[i], staffOrStudentAdd[i]);
-        }
+            bool addSuccess = PeopleToSpace(namesAdd[i], staffOrStudentAdd[i]);
+	        
+	        if (!addSuccess) {
+	        	outFile << "Unable to add: " << namesAdd[i] << ". No space." << endl;	
+			}
+		}
     }
 
     // g) Move staff who are in the wrong area
     MoveStaff();
 
     // h) Output final updated parking data to file
-    OutputToFile(outFile, names, staffOrStudent, maxSpots);
+    outFile << "" << endl << "Final updated lot: " << endl << "" << endl;
+    OutputToFile(outFile, names, staffOrStudent, MAXSPOTS);
 
     // Close files
     currentFile.close();
